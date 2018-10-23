@@ -8,7 +8,7 @@ import signal
 import sys
 
 from random import randint
-from time import sleep
+
 
 
 nombreRandom = randint(0,100)
