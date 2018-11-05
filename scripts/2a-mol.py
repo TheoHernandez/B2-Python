@@ -1,62 +1,49 @@
-#!bin/phyton36
-# 2a-mol.py est un jeu du plus ou moins qui tourne en démon
-# Date 23/10/2018
+#!/usr/bin/python36
+# Description: jeu plus ou moins en demon
+# Date: 04/11/2018
 # Auteur : Theo HERNANDEZ && Jonathan DINH
 
-import random
-import signal
-import sys
-
 from random import randint
+import re
+import signal
 
+#Fonction pour le message de fin
+def end(*args):
+  read("Désoler c' était: " + str(n))
+  exit()
 
-nombreRandom = randint(0,100)
+signal.signal(signal.SIGINT, end)
+signal.signal(signal.SIGTERM, end)
 
+#Ecrire dans jeu.txt
+def read(msg):
+  jeu = open("jeu.txt", "w")
+  jeu.write(msg)
+  jeu.close()
 
+#Lire dans jeu.txt
+def lire_fichier():
+  jeu = open("jeu.txt", "r")
+  msg = jeu.read()
+  jeu.close()
+  return msg
 
-def youcant(sig, frame):
-        print(' ')
-        aurevoir()
-        sys.exit(0)
+n = randint(0,100)
+fin = False
+read("Jeu du plus ou moins! Saisissez un nombre entre 0 et 100")
 
-signal.signal(signal.SIGINT, youcant)
-
-
-def checkIsNumber():
-        while 0 < 1:
-                try:
-			nombre = input("Saisir un nombre, taper 'q' pour quitter : ")
-                        if nombre == 'q':
-                                break
-                        nombre = int(nombre)
-                        if nombre > 100  or nombre < 0:
-                                print('Erreur ce nombre n\'est pas compris entre 0 et 100')
-                        else:
-                                break
-                except ValueError:
-                        print('Erreur ce n\'est pas un nombre')
-        return nombre
-
-def aurevoir():
-        print('Le nombre etait ' + str(nombreRandom))
-        print('Aurevoir')
-
-
-
-while 0 < 1:
-        nombreUser = checkIsNumber()
-
-        
-        if nombreUser == 'q':
-                aurevoir()
-                break
-        if nombreUser == nombreRandom:
-                print('Gagner')
-                break
-        elif nombreUser > nombreRandom:
-                print('Plus petit')
-        else:
-                print('Plus grand')
-
-
-
+while fin is False:
+  nbr = lire_fichier()
+  if re.match(r"^[0-9]+$", nbr):
+    nbr = int(nbr)
+    if nbr > 100:
+      continue
+    if nbr > n:
+      read("Plus petit")
+    elif nbr < n:
+      read("Plus grand")
+    elif nbr == n:
+      read("Tu as Gagner")
+      fin = True
+    else :
+      end()
