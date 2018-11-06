@@ -19,8 +19,8 @@ import signal
  
 nbrRandom = random.randint(0,100)
 msg = "Jeu du plus ou moins, écrire un nombre entre 0 et 100"
-pluspetit = "Plus grand "
-plusgrand = "Plus petit !"
+pluspetit = "Plus petit "
+plusgrand = "Plus grand"
 error = "Ecrire un nombre entre 0 et 100 !"
 victoire = 'Tu as gagne'
  
@@ -33,27 +33,27 @@ def end(sig, frame):
 	sys.exit(0)
  
 def ecrire():
-	fichier = open("jeu.txt", "w")
+	fichier = open("./jeu.txt", "w")
 	fichier.write(msg)
 	fichier.close()
  
 def lecture():
-	fichier = open("jeu.txt", "r")
+	fichier = open("./jeu.txt", "r")
 	return fichier.read()
 	fichier.close()
  
 def plusPetit():
-	fichier = open("jeu.txt", "w")
+	fichier = open("./jeu.txt", "w")
 	fichier.write(pluspetit)
 	fichier.close()
 
 def plusGrand():
-	fichier = open("jeu.txt", "w")
+	fichier = open("./jeu.txt", "w")
 	fichier.write(plusgrand)
 	fichier.close()
 
 def gagner():
-	fichier = open("jeu.txt", "w")
+	fichier = open("./jeu.txt", "w")
 	fichier.write(victoire)
 	fichier.close()
 
@@ -78,7 +78,7 @@ while True:
 		elif nbr > nbrRandom:
 			plusPetit()
 			time.sleep(1)
-		else:
+		elif nbr < nbrRandom:
 			plusGrand()
 			time.sleep(1)
 	except ValueError:
