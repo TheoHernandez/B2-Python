@@ -19,8 +19,8 @@ import signal
 
 nbrRandom = random.randint(0,100)
 msg = "Jeu du plus ou moins, écrire un nombre entre 0 et 100"
-pluspetit = "Plus grand "
-plusgrand = "Plus petit !"
+pluspetit = "Plus petit "
+plusgrand = "Plus grand "
 error = "Ecrire un nombre entre 0 et 100 !"
 victoire = 'Tu as gagne'
 
