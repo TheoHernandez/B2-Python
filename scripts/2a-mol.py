@@ -1,69 +1,85 @@
-#!/usr/bin/python36
-# Description: jeu plus ou moins en demon
-# Date: 04/11/2018
+#!/bin/python36
+#
+# 2a-mol.py : Plus ou moins avec lecture dans un fichier
+# Date : 23/10/2018
 # Auteur : Theo HERNANDEZ && Jonathan DINH
 
 #
-#Import
+# IMPORTS 
 #
-from random import randint
-import re
+
+import random
+import time
+import sys
 import signal
 
 #
-#Variable
+# VARIABLES
 #
-min = 0
-max = 100
-nbr = randint(min,max) 
-gagner = False
+
+nbrRandom = random.randint(0,100)
+msg = "Jeu du plus ou moins ! Nombre compris entre 0 et 100"
+plusgrand = "C'est plus grand !"
+pluspetit = "C'est plus petit !"
+error = "Veuillez ecrire un nombre entre 0 et 100 !"
+win = "Tu as gagne"
 
 #
-#Fonction pour le message de fin
+# FONCTIONS
 #
-def end(*args):
-  read("Désoler c' était: " + str(n))
-  exit()
+
+def end(sig, frame):
+	bye()
+	sys.exit(0)
+
+def ecrire():
+	fichier = open("jeu.txt", "w")
+	fichier.write(msg)
+	fichier.close()
+
+def lecture():
+	fichier = open("jeu.txt", "r")
+	return fichier.read()
+	fichier.close()
+
+def plusPetit():
+	fichier = open("jeu.txt", "w")
+	fichier.write(pluspetit)
+	fichier.close()
+
+def plusGrand():
+	fichier = open("jeu.txt", "w")
+	fichier.write(plusgrand)
+	fichier.close()
+
+def Victoire():
+	fichier = open("jeu.txt", "w")
+	fichier.write(win)
+	fichier.close()
+
+def bye():
+	print('\nLe nombre etait ' + str(nbrRandom))
+
+#
+# SCRIPT 
+#
 
 signal.signal(signal.SIGINT, end)
 signal.signal(signal.SIGTERM, end)
+ecrire()
 
-#
-#Ecrire dans jeu.txt
-#
-def read(msg):
-  jeu = open("jeu.txt", "w")
-  jeu.write(msg)
-  jeu.close()
-
-#
-#Lire dans jeu.txt
-#
-def lire_fichier():
-  jeu = open("jeu.txt", "r")
-  msg = jeu.read()
-  jeu.close()
-  return msg
- 
-
-read("Jeu du plus ou moins! Saisissez un nombre entre 0 et 100")
-
-
-#
-#Script du jeu
-#
-while gagner is False:
-  nbr = lire_fichier()
-  if re.match(r"^[0-9]+$", nbr):
-    nbr = int(nbr)
-    if nbr > 100:
-      continue
-    if nbr > n:
-      read("Plus petit")
-    elif nbr < n:
-      read("Plus grand")
-    elif nbr == n:
-      read("Tu as Gagner")
-      gagner = True
-    else :
-      end()
+while True:
+	nbr = lecture()
+	try:
+		nbr = int(nbr)
+		if nbr == nbrRandom:
+			Victoire()
+			break
+		elif nbr > nbrRandom:
+			plusPetit()
+			time.sleep(1)
+		else:
+			plusGrand()
+			time.sleep(1)
+	except ValueError:
+		time.sleep(1)
